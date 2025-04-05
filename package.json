@@ -1,0 +1,12 @@
+{
+    "name": "htown-express-app",
+    "version": "1.0.0",
+    "description": "A simple Express.js app for Kubernetes deployment",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js"
+    },
+    "dependencies": {
+      "express": "^4.18.2"
+    }
+  }
