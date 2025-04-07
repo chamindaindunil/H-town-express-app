@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  build-and-push:
 
     runs-on: ubuntu-latest
 
@@ -43,6 +43,7 @@ jobs:
   deploy:
 
     runs-on: ubuntu-latest
+    needs: build-and-push
 
     steps:
     - name: Checkout code
@@ -53,4 +54,13 @@ jobs:
       with:
         version: 'latest'
 
+    - name: Set up kubeconfig (from secret)
+      run: |
+        echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
+
+    - name: Apply Kubernetes Manifests
+      run: |
+        kubectl apply -f K8s/deployment.yaml
+        kubectl apply -f K8s/service.yaml
+        kubectl apply -f K8s/ingress.yaml
     
